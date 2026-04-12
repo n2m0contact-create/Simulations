@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CHARACTERS</title>
+
+    <style>
+        /* ===== ヘッド ===== */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 10px 20px;
+            /* ここで左右マージン調整 */
+            background: rgba(0, 0, 0, 0.6);
+            /* 半透明 */
+            backdrop-filter: blur(5px);
+            /* 背景をぼかす */
+            z-index: 1000;
+            transition: top 0.6s ease-in-out;
+            /* スクロールでスライド */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 10px;
+            margin-left: 730px;
+        }
+
+        .nav-menu a {
+            margin-left: 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .nav-menu a:hover {
+            color: #00d9ff;
+            /* ホバーで色変化 */
+        }
+
+        .chara-card {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+
+            width: 80%;
+            margin: 2px auto;
+            padding: 1px;
+
+            background: #111;
+            border: 2px solid #6e6e6e;
+            text-decoration: none;
+            color: white;
+
+            transition: 0.3s;
+        }
+
+        .filter-group {
+            color: white;
+            margin-top: 15px;
+            display: block;
+            align-items: center;
+            gap: 15px;
+        }
+
+
+        .filter-title {
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #00d9ff;
+        }
+
+        .filter-group label {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .filter-options label {
+            margin-bottom: 5px;
+        }
+
+        .filter-divider {
+            border: none;
+            border-top: 1px solid #333;
+            margin: 10px 0;
+        }
+
+        .detail-btn {
+            margin-left: auto;
+        }
+
+        .chara-card:hover {
+            background: #1a1a1a;
+        }
+
+        /* 画像 */
+        .chara-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border: 1px solid #555;
+        }
+
+        /* 右側 */
+        .chara-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .chara-info h2 {
+            width: 150px;
+        }
+
+        .chara-info p {
+            flex: 1;
+        }
+
+        .chara-tags {
+            display: flex;
+            gap: 5px;
+        }
+
+        /* タグ */
+        .chara-tags span {
+            display: inline-block;
+            margin-right: 5px;
+            padding: 3px 6px;
+            background: #333;
+            font-size: 12px;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        /* 左の画像エリア */
+        .image-area {
+            width: 0;
+            overflow: hidden;
+            transition: 0.4s;
+        }
+
+        .image-area img {
+            width: 100%;
+        }
+
+        /* 画像表示時 */
+        .container.active .image-area {
+            width: 300px;
+        }
+
+        /* 右側（一覧） */
+        .list-area {
+            padding-top: 50px;
+            flex: 1;
+            transition: 0.4s;
+        }
+
+        @media (max-width: 768px) {
+
+            .container {
+                flex-direction: column;
+            }
+
+            .image-area {
+                width: 100% !important;
+            }
+
+        }
+
+        #close {
+            position: absolute;
+            top: 120px;
+
+            right: 1px;
+
+
+            background: black;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .image-area {
+            position: relative;
+        }
+
+        .detail-btn {
+            padding: 5px 10px;
+            background: #444;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .detail-btn:hover {
+            background: #666;
+        }
+
+        .search-header {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            background: #000;
+            z-index: 10;
+        }
+
+        /* 検索パネル */
+        #searchPanel {
+            max-height: 0;
+            overflow: hidden;
+            transition: 0.4s ease;
+            background: #111;
+            margin-top: 5px;
+        }
+
+        /* 開いた状態 */
+        #searchPanel.active {
+            max-height: 500px;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            opacity: 1;
+        }
+
+        #preview {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        #preview.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="logo">CHARACTER</div>
+        <nav class="nav-menu">
+            <a href="../index.html">HOME</a>
+            <a href="../GameProject/ゲームプロジェクト一覧.html">PROJECT</a>
+            <a href="world.html">WORLD</a>
+            <a href="キャラクター一覧.html">CHARACTER</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <div class="container">
+
+            <div class="image-area">
+                <button id="close"> ✖ </button>
+                <img id="preview" src="">
+            </div>
+
+            <div class="list-area">
+
+                <div class="search-header">
+                    <button id="openSearch">🔍 検索</button>
+                    <div class="sort-area">
+                        <button onclick="sortChara('asc')">あ↓</button>
+                        <button onclick="sortChara('desc')">ん↑</button>
+                    </div>
+                </div>
+
+
+
+                <div id="searchPanel">
+                    <input type="text" id="nameSearch" placeholder="名前で検索">
+
+                    <div class="filter-group">
+                        <p class="filter-title">存在</p>
+                        <div class="filter-options">
+                            <label><input type="checkbox" value="human"> 人</label>
+                            <label><input type="checkbox" value="unhuman"> 魔族</label>
+                            <label><input type="checkbox" value="monster"> 魔物</label>
+                            <label><input type="checkbox" value="A"> 亞</label>
+                            <label><input type="checkbox" value="s.other"> その他</label>
+                        </div>
+                    </div>
+
+                    <hr class="filter-divider">
+
+                    <div class="filter-group">
+                        <p class="filter-title">性別</p>
+                        <div class="filter-options">
+                            <label><input type="checkbox" value="male"> 男性</label>
+                            <label><input type="checkbox" value="female"> 女性</label>
+                            <label><input type="checkbox" value="both"> 両性</label>
+                            <label><input type="checkbox" value="unknown"> 無性</label>
+                            <label><input type="checkbox" value="other"> その他</label>
+
+                        </div>
+                    </div>
+
+                    <hr class="filter-divider">
+
+                    <div class="filter-group">
+                        <p class="filter-title">世界</p>
+                        <div class="filter-options">
+                            <label><input type="checkbox" value="roof"> roof</label>
+                            <label><input type="checkbox" value="mother_cell"> コピー</label>
+                            <label><input type="checkbox" value="daughter_cell"> 同位体</label>
+                        </div>
+                    </div>
+
+                    <hr class="filter-divider">
+
+                    <div class="filter-group">
+                        <p class="filter-title">登場ゲーム</p>
+                        <div class="filter-options">
+                            <label><input type="checkbox" value="otukai"> おつかい</label>
+                            <label><input type="checkbox" value="Tomonnniter"> To monniter</label>
+                            <label><input type="checkbox" value="g.other"> その他</label>
+                        </div>
+                    </div>
+
+                    <hr class="filter-divider">
+
+                    <div class="filter-group">
+                        <p class="filter-title">生死</p>
+                        <div class="filter-options">
+                            <label><input type="checkbox" value="alive"> 生存</label>
+                            <label><input type="checkbox" value="dead"> 死亡</label>
+                        </div>
+                    </div>
+
+                </div>
+
+               
+                 <!--  <div id="charaList"></div>-->
+
+
+            </div>
+
+        </div>
+    </main>
+</body>
+
+<script src="chara.js"></script>
+
+<script>
+    const tags = document.querySelectorAll(".tag");
+    const cards = document.querySelectorAll(".chara-card");
+
+    let activeFilters = [];
+
+    tags.forEach(tag => {
+        tag.addEventListener("click", () => {
+
+            const filter = tag.dataset.filter;
+
+            if (filter === "all") {
+                activeFilters = [];
+                tags.forEach(t => t.classList.remove("active"));
+                tag.classList.add("active");
+            } else {
+                tag.classList.toggle("active");
+
+                if (activeFilters.includes(filter)) {
+                    activeFilters = activeFilters.filter(f => f !== filter);
+                } else {
+                    activeFilters.push(filter);
+                }
+            }
+
+            filterCharacters();
+        });
+    });
+
+    function filterCharacters() {
+
+        const nameValue = nameInput.value.toLowerCase();
+
+        const checkedTags = Array.from(checkboxes)
+            .filter(cb => cb.checked)
+            .map(cb => cb.value);
+
+        cards.forEach(card => {
+
+            const cardTags = card.dataset.tags.split(" ");
+            const name = card.querySelector("h2").textContent.toLowerCase();
+
+            // 名前一致
+            const matchName = name.includes(nameValue);
+
+            // タグ一致（どれか）
+            const matchTags = checkedTags.length === 0 ||
+                checkedTags.some(tag => cardTags.includes(tag));
+
+            const match = matchName && matchTags;
+
+            card.style.display = match ? "flex" : "none";
+        });
+    }
+
+    const mainContainer = document.querySelector(".container");
+    const preview = document.getElementById("preview");
+
+    document.addEventListener("click", (e) => {
+        if (e.target.classList.contains("view-btn")) {
+
+            e.preventDefault();      // ページ移動止める
+            e.stopPropagation();     // 親クリックも止める ←重要
+
+            const img = e.target.dataset.img;
+            preview.src = img;
+
+            mainContainer.classList.add("active");
+        }
+    });
+
+    document.getElementById("close").onclick = () => {
+        mainContainer.classList.remove("active");
+    };
+
+    const openBtn = document.getElementById("openSearch");
+    const panel = document.getElementById("searchPanel");
+
+    openBtn.onclick = () => {
+        panel.classList.toggle("active");
+    };
+
+    const nameInput = document.getElementById("nameSearch");
+    const checkboxes = document.querySelectorAll("#searchPanel input[type='checkbox']");
+
+    nameInput.addEventListener("input", filterCharacters);
+    checkboxes.forEach(cb => cb.addEventListener("change", filterCharacters));
+
+    const charaContainer = document.getElementById("charaList");
+
+    function sortChara(order = "asc") {
+        charaList.sort((a, b) => {
+            const result = a.kana.localeCompare(b.kana, 'ja');
+            return order === "asc" ? result : -result;
+        });
+
+        renderCharaList(); // ←再描画
+    }
+
+    function renderCharaList() {
+        const container = document.getElementById("charaList");
+        container.innerHTML = "";
+
+        charaList.forEach(data => {
+            const card = document.createElement("div");
+            card.className = "chara-card";
+
+            card.innerHTML = `
+            <button class="view-btn" data-img="${data.img}">
+                画像閲覧
+            </button>
+
+            <div class="chara-info">
+                <h2>${data.name}</h2>
+                <p>${data.desc}</p>
+
+                <div class="chara-tags">
+                    ${data.tags.map(tag => `<span>${tag}</span>`).join("")}
+                </div>
+            </div>
+
+            <button class="detail-btn" onclick="location.href='${data.link}'">
+                詳細
+            </button>
+        `;
+
+            container.appendChild(card);
+        });
+    }
+
+    renderCharaList();
+
+    preview.classList.remove("show");
+
+    setTimeout(() => {
+        preview.src = img;
+        preview.classList.add("show");
+    }, 50);
+
+</script>
+
+
+</body>
+
+</html>

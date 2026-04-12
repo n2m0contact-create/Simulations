@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PROJECT</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            background: #111;
+            color: white;
+        }
+
+        /* ===== ヘッド ===== */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 10px 20px;
+            /* ここで左右マージン調整 */
+            background: rgba(0, 0, 0, 0.6);
+            /* 半透明 */
+            backdrop-filter: blur(5px);
+            /* 背景をぼかす */
+            z-index: 1000;
+            transition: top 0.6s ease-in-out;
+            /* スクロールでスライド */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 10px;
+            margin-left: 730px;
+        }
+
+        .nav-menu a {
+            margin-left: 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .nav-menu a:hover {
+            color: #00d9ff;
+            /* ホバーで色変化 */
+        }
+
+        /* タイトル */
+        .title {
+            text-align: center;
+            padding: 60px;
+            font-size: 32px;
+        }
+
+        .category {
+            width: 80%;
+            margin: 50px auto;
+        }
+
+        /* ジャンル見出し */
+        .category h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            border-left: 5px solid white;
+            padding-left: 10px;
+        }
+
+        /* カードを横に並べる */
+        .project-list {
+            display: flex;
+            /* 横並び */
+            gap: 20px;
+            /* カード間隔 */
+            flex-wrap: wrap;
+            /* 横幅いっぱいになったら折り返す */
+        }
+
+        /* カード自体 */
+        .project-item {
+            min-width: 250px;
+            border: 2px solid #555;
+            padding: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #1a1a1a;
+            display: block;
+            text-decoration: none;
+            color: white;
+        }
+
+        .project-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .project-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        /* サムネ */
+        .project-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        /* ステータス */
+        .status {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .statusmi {
+            color: rgb(0, 217, 255);
+        }
+
+        .statusseisaku {
+            color: orange;
+        }
+
+        .statusOk {
+            color: lightgreen;
+        }
+
+        .statusakan {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="logo">PROJECT</div>
+        <nav class="nav-menu">
+            <a href="../index.html">HOME</a>
+            <a href="ゲームプロジェクト一覧.html">PROJECT</a>
+            <a href="world.html">WORLD</a>
+            <a href="../character一覧/キャラクター一覧.html">CHARACTER</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <div class="title">PROJECT</div>
+
+        <div class="project-list">
+
+            <!-- RPGの段 -->
+            <div class="category">
+                <h2>RPG</h2>
+                <div class="project-list">
+                    <!-- ゲーム１ -->
+                    <a href="games/otsukai/index.html" class="project-item">
+                        <img src="images/game1.jpg">
+                        <h3>おつかい</h3>
+                        <p>王道グロRPG</p>
+                        <div class="status statusseisaku">制作中</div>
+                    </a>
+
+                    <!-- ゲーム２ -->
+                    <a href="games/protocol/index.html" class="project-item">
+                        <img src="images/game3.jpg">
+                        <h3>protocol</h3>
+                        <p>おつかいのバックアップ用ゲーム</p>
+                        <div class="status statusseisaku">制作中</div>
+                    </a>
+
+
+                </div>
+            </div>
+
+            <!-- ノベルゲームの段 -->
+            <div class="category">
+                <h2>ノベルゲーム</h2>
+                <div class="project-list">
+                    <!-- ゲーム１ -->
+                    <a href="games/tomonniter/index.html" class="project-item">
+                        <img src="images/game2.jpg">
+                        <h3>Tomonniter</h3>
+                        <p>警察の相棒もの</p>
+                        <div class="status statusseisaku">制作中</div>
+                    </a>
+
+                    <!-- ゲーム２ -->
+                    <a href="games/worker/index.html" class="project-item">
+                        <img src="images/game2.jpg">
+                        <h3>Worker</h3>
+                        <p>一週間生き残れ！</p>
+                        <div class="status statusakan">停止中</div>
+                    </a>
+
+                </div>
+            </div>
+
+            <!-- 構想中の段 -->
+            <div class="category">
+                <h2>構想中</h2>
+                <div class="project-list">
+                    <a href="games/game5/index.html" class="project-item">
+                        <img src="images/game5.jpg">
+                        <h3>ガードナー</h3>
+                        <p></p>
+                        <div class="status statusseisaku">構想中</div>
+                    </a>
+
+                    <a href="games/game6/index.html" class="project-item">
+                        <img src="images/game6.jpg">
+                        <h3>しゅうまつ！</h3>
+                        <p></p>
+                        <div class="status statusseisaku">構想中</div>
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+    </main>
+
+    <script>
+        let lastScroll = 0;
+        const header = document.querySelector(".site-header");
+
+        window.addEventListener("scroll", () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                // 下にスクロール → ヘッダー隠す
+                header.style.top = "-80px";
+            } else {
+                // 上にスクロール → ヘッダー表示
+                header.style.top = "0";
+            }
+
+            lastScroll = currentScroll;
+        });
+    </script>
+
+</body>
+
+</html>
