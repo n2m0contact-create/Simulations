@@ -112,7 +112,7 @@ window.charaList = [
         kana: "ろろす・えす",
         type: ["unhuman", "unknown", "daughter_cell", "otukai"],
         tags: ["魔族", "無性", "枝", "おつかい"],
-        desc: "R1に跋扈する歩く卑猥魔族。",
+        desc: "R1に跋扈する卑猥魔族。",
         img: "character_img/",
         link: ""
     },
@@ -200,7 +200,7 @@ window.charaList = [
         kana: "しきょうしゃ",
         type: ["human", "unknown", "mother_cell", "g.other","alive"],
         tags: ["人", "無性", "幹", "その他","生存"],
-            desc: "推定鳥系のキメラ。死に心酔している。",
+            desc: "推定鳥系のキメラ。死と花を信じている。",
             img: "character_img/",
             link: ""
     },
