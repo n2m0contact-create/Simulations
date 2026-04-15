@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <title> Mecanizm </title>
+</head>
+
+<style>
+    body {
+        margin: 0;
+        font-family: sans-serif;
+        background: #111;
+        color: white;
+    }
+
+    /* ===== 背景 ===== */
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: url("background.jpg") center/cover no-repeat;
+        filter: blur(8px) brightness(0.5);
+        z-index: -1;
+    }
+
+    /* ===== 上部（ぼかしなし） ===== */
+    .header {
+        height: 100px;
+        background: url("background.jpg") center/cover no-repeat;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        font-weight: bold;
+        padding-bottom: 5px;
+        font-size: 30px;
+        letter-spacing: 3px;
+        text-shadow: 0 0 10px black;
+    }
+
+    /* ===== ヘッド ===== */
+    .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 10px 20px;
+        /* ここで左右マージン調整 */
+        background: rgba(0, 0, 0, 0.6);
+        /* 半透明 */
+        backdrop-filter: blur(5px);
+        /* 背景をぼかす */
+        z-index: 1000;
+        transition: top 0.6s ease-in-out;
+        /* スクロールでスライド */
+    }
+
+    .nav-menu {
+        display: flex;
+        gap: 5px;
+        margin-left: 730px;
+    }
+
+    .nav-menu a {
+        margin-left: 450px;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+
+    .nav-menu a:hover {
+        color: #00d9ff;
+        /* ホバーで色変化 */
+    }
+
+    .detail-container {
+        display: flex;
+
+        gap: 50px;
+        max-width: 1000px;
+        margin: 10px auto;
+        padding: 50px 50px 60px 0;
+        align-items: flex-start;
+    }
+
+    /* 画像側 */
+    .detail-image {
+        flex: 0 0 400px;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .detail-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        margin: 0;
+
+        /* box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); */
+    }
+
+    /* テキスト側 */
+    .detail-text {
+        flex: 1;
+    }
+
+    .detail-text h1 {
+        margin-bottom: 10px;
+    }
+
+    .tags {
+        color: #888;
+        margin-bottom: 15px;
+    }
+
+    .desc {
+        line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+        .detail-container {
+            flex-direction: column;
+        }
+
+        .detail-image,
+        .detail-text {
+            width: 100%;
+        }
+    }
+
+    .wake_colow {
+        color: #cccccc;
+    }
+
+    #topBtn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+
+        padding: 10px 15px;
+        font-size: 18px;
+
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        border: none;
+        border-radius: 8px;
+
+        cursor: pointer;
+
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.3s;
+    }
+
+    #topBtn.show {
+        opacity: 1;
+        pointer-events: auto;
+    }
+</style>
+
+<body>
+    <header class="site-header">
+        <nav class="nav-menu">
+            <a href="../../../index.html">HOME</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="detail-container">
+            <div class="detail-image">
+                <img src="mekanizm.webp" alt="Mekanizm" />
+            </div>
+            <div class="detail-text">
+                <h1>Mekanizm</h1>
+                <div class="tags">魔族 / 無性 / コピー / その他</div>
+                <div class="wake_colow">
+
+                    <div class="wake">
+                        年齢：250以上 <br>
+                        体格：197cm <br>
+                        役職：魔王城管理兼魔王護衛 <br>
+                        <span> 好き: メカ、部下　</span>
+                        <span> 嫌い: 生もの　</span>
+                    </div>
+                    <span> 有利属性: 　</span>
+                    <span> 不利属性: 　</span>
+                </div>
+
+                <p class="desc">
+                    頭のない外見の大柄な人型の魔族。<br>
+                    仕事とメカと部下が好きな、温厚な性格の持ち主。<br>
+                    自分に厳しく、他者にべた甘である。<br>
+                    現場に出て作業するのが好きなため、休日には外に出ている。<br>
+                    部下に飲みに誘われれば、わざわざ時間を空けていくなど、結構ノリがいいのかもしれない。<br>
+                    ただ、MZ:Typesには妙に冷たい部分があったり、壁を感じる事がある。<br>
+
+
+                    魂に関する能力を持ち、それによって己の魂の転写、翻訳を繰り返すことにより
+                    MZ:Typesを作り上げた。<br>
+                    現在これらの能力は、MZ:Typesの量産のため隔離しているため使用できない。<br>
+
+                    MZ:Typesには、少数ながらお気に入りがおり、適度に気にかけている。<br>
+                    つもりだが、本人たちには結構距離を置かれている。<br>
+
+                </p>
+
+                <!--実は４番目ボスの中で最もメンタルが弱く、確殺コースが用意されている。<br>
+                確殺の方法は簡単で、MZ:Typesを量産している魔王城地下の工場の核を破壊することによって<br>
+                彼の頭が、胴体の方に頭が再生される。<br>
+                そうすると、勝手に自殺する。<br>
+                この時に、早めに彼に会いに行くことで頭ありの状態を見ることが出来る。<br> -->
+            </div>
+
+            <button id="topBtn">↑</button>
+    </main>
+
+    <script>
+        let lastScroll = 0;
+        const header = document.querySelector(".site-header");
+
+        window.addEventListener("scroll", () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                // 下にスクロール → ヘッダー隠す
+                header.style.top = "-80px";
+            } else {
+                // 上にスクロール → ヘッダー表示
+                header.style.top = "0";
+            }
+
+            lastScroll = currentScroll;
+        });
+
+        const topBtn = document.getElementById("topBtn");
+
+        window.addEventListener("scroll", () => {
+
+            const scrollY = window.scrollY;
+            const pageHeight = document.body.scrollHeight;
+            const windowHeight = window.innerHeight;
+
+            // 一番下に近づいたら表示
+            if (scrollY + windowHeight > pageHeight - 200) {
+                topBtn.classList.add("show");
+            } else {
+                topBtn.classList.remove("show");
+            }
+        });
+
+        topBtn.onclick = () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        };
+    </script>
+
+</body>
+
+</html>

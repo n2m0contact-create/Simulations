@@ -262,7 +262,7 @@
 <body>
 
     <header class="site-header">
-        <div class="logo">CHARACTER</div>
+        <div class="logo">人格保管所</div>
         <nav class="nav-menu">
             <a href="../index.html">HOME</a>
             <a href="../GameProject/ゲームプロジェクト一覧.html">PROJECT</a>
@@ -326,8 +326,8 @@
                         <p class="filter-title">世界</p>
                         <div class="filter-options">
                             <label><input type="checkbox" value="roof"> roof</label>
-                            <label><input type="checkbox" value="mother_cell"> コピー</label>
-                            <label><input type="checkbox" value="daughter_cell"> 同位体</label>
+                            <label><input type="checkbox" value="mother_cell"> 幹</label>
+                            <label><input type="checkbox" value="daughter_cell"> 枝</label>
                         </div>
                     </div>
 
@@ -354,8 +354,8 @@
 
                 </div>
 
-               
-                 <!--  <div id="charaList"></div>-->
+
+                <div id="charaList"></div>
 
 
             </div>
@@ -367,8 +367,24 @@
 <script src="chara.js"></script>
 
 <script>
+    let lastScroll = 0;
+    const header = document.querySelector(".site-header");
+
+    window.addEventListener("scroll", () => {
+        const currentScroll = window.pageYOffset;
+
+        if (currentScroll > lastScroll && currentScroll > 100) {
+            // 下にスクロール → ヘッダー隠す
+            header.style.top = "-80px";
+        } else {
+            // 上にスクロール → ヘッダー表示
+            header.style.top = "0";
+        }
+
+        lastScroll = currentScroll;
+    });
+
     const tags = document.querySelectorAll(".tag");
-    const cards = document.querySelectorAll(".chara-card");
 
     let activeFilters = [];
 
@@ -397,6 +413,8 @@
 
     function filterCharacters() {
 
+        const cards = document.querySelectorAll(".chara-card"); // ←ここに移動！
+
         const nameValue = nameInput.value.toLowerCase();
 
         const checkedTags = Array.from(checkboxes)
@@ -404,14 +422,11 @@
             .map(cb => cb.value);
 
         cards.forEach(card => {
-
-            const cardTags = card.dataset.tags.split(" ");
+            const cardTags = card.dataset.tags?.split(" ") || [];
             const name = card.querySelector("h2").textContent.toLowerCase();
 
-            // 名前一致
             const matchName = name.includes(nameValue);
 
-            // タグ一致（どれか）
             const matchTags = checkedTags.length === 0 ||
                 checkedTags.some(tag => cardTags.includes(tag));
 
@@ -473,24 +488,27 @@
             const card = document.createElement("div");
             card.className = "chara-card";
 
+            // ★これ追加！！
+            card.dataset.tags = data.type.join(" ");
+
             card.innerHTML = `
-            <button class="view-btn" data-img="${data.img}">
-                画像閲覧
-            </button>
+        <button class="view-btn" data-img="${data.img}">
+            画像閲覧
+        </button>
 
-            <div class="chara-info">
-                <h2>${data.name}</h2>
-                <p>${data.desc}</p>
+        <div class="chara-info">
+            <h2>${data.name}</h2>
+            <p>${data.desc}</p>
 
-                <div class="chara-tags">
-                    ${data.tags.map(tag => `<span>${tag}</span>`).join("")}
-                </div>
+            <div class="chara-tags">
+                ${data.tags.map(tag => `<span>${tag}</span>`).join("")}
             </div>
+        </div>
 
-            <button class="detail-btn" onclick="location.href='${data.link}'">
-                詳細
-            </button>
-        `;
+        <button class="detail-btn" onclick="location.href='${data.link}'">
+            詳細
+        </button>
+    `;
 
             container.appendChild(card);
         });
@@ -499,11 +517,6 @@
     renderCharaList();
 
     preview.classList.remove("show");
-
-    setTimeout(() => {
-        preview.src = img;
-        preview.classList.add("show");
-    }, 50);
 
 </script>
 

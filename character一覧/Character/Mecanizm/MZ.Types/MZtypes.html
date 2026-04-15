@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<input type="text" id="tableSearch" placeholder="名前で検索">
+
+<table id="charaTable">
+    <thead>
+        <tr>
+            <th>TYPE</th>
+            <th>個体番号</th>
+            <th>現状</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+    const tableBody = document.querySelector("#charaTable tbody");
+
+    function renderTable(dataList) {
+        tableBody.innerHTML = "";
+
+        dataList.forEach(data => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+    <td>${data.name}</td>
+    <td>${data.type[0]}</td>
+    <td>${data.type[1]}</td>
+    `;
+
+            tableBody.appendChild(row);
+        });
+    }
+
+    renderTable(charaList);
+</script>
