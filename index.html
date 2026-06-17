@@ -223,10 +223,12 @@
 
     <!-- 広告 -->
     <div class="ad">
-        <a href="games/index.html">
+        <a href="カウンセリングgame/index.html">
             <img src="images/game_banner.png" alt="ミニゲーム広告">
         </a>
-
+        <a href="なでなでgame/index.html">
+            <img src="images/アイコン.png" alt="なでなでゲーム広告">
+        </a>
     </div>
 
     <!-- カテゴリー -->
@@ -238,17 +240,24 @@
                 <button>PROJECT </button>
             </a>
             <a href="character一覧/キャラクター一覧.html">
-            <button>CHARACTER</button>
+                <button>CHARACTER</button>
             </a>
         </div>
     </div>
 
-    <!-- ランダムイラスト -->
+    <!-- ランダムイラスト・動画 -->
     <div class="random">
         <h2>イラスト</h2>
-        <img id="randomImage" src="img1.jpg">
+        <img id="randomImage" src="img.1jpg">
+        <img id="randomImage" src="img2.jpg">
+        <br><br>
+
+        <video id="randomVideo" width="300" controls>
+            <!-- <source src="ランダムイラスト・動画/1474.mp4" type="video/mp4"> -->
+        </video>
         <br><br>
         <button onclick="changeImage()">切り替え</button>
+        <button onclick="changeVideo()">動画切り替え</button>
     </div>
 
     <!-- フッター -->
@@ -272,11 +281,26 @@
     </div>
 
     <script>
-        const images = ["img1.jpg", "img2.jpg", "img3.jpg"];
+        const mediaList = [
+            { type: "video", src: "ランダムイラスト・動画/1474.mp4" },
+            { type: "image", src: "img2.jpg" }
+        ];
 
-        function changeImage() {
-            const rand = Math.floor(Math.random() * images.length);
-            document.getElementById("randomImage").src = images[rand];
+        function changeMedia() {
+            const rand = Math.floor(Math.random() * mediaList.length);
+            const media = mediaList[rand];
+
+            const viewer = document.getElementById("viewer");
+
+            if (media.type === "video") {
+                viewer.innerHTML = `
+            <video width="300" controls>
+                <source src="${media.src}" type="video/mp4">
+            </video>
+        `;
+            } else {
+                viewer.innerHTML = `<img src="${media.src}" width="300">`;
+            }
         }
 
         let lastScroll = 0;
@@ -295,6 +319,7 @@
 
             lastScroll = currentScroll;
         });
+
 
     </script>
 
