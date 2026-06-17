@@ -143,7 +143,6 @@ window.charaList = [
 
 
 
-
     /* 魔物 */
     //R1
 
