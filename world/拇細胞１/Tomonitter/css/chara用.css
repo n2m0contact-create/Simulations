@@ -1,0 +1,767 @@
+.chara-photo {
+  width: 230px;
+  margin-top: 50px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.chara {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2rem;
+  align-items: start;
+
+  border-bottom: 2px solid rgba(255, 255, 255, .2);
+  padding-bottom: 1rem;
+  border-left: 5px solid rgba(255, 255, 255, .15);
+  padding-left: 2rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+
+}
+
+.Nc-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.6s ease, opacity 0.4s ease;
+}
+
+.Nc-wrapper.is-open {
+  max-height: 5000px;
+  opacity: 1;
+}
+
+.Sc-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.6s ease, opacity 0.4s ease;
+}
+
+.Sc-wrapper.is-open {
+  max-height: 5000px;
+  opacity: 1;
+}
+
+.Mc-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.6s ease, opacity 0.4s ease;
+}
+
+.Mc-wrapper.is-open {
+  max-height: 5000px;
+  opacity: 1;
+}
+
+.Ic-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.6s ease, opacity 0.4s ease;
+}
+
+.Ic-wrapper.is-open {
+  max-height: 5000px;
+  opacity: 1;
+}
+
+.Hc-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.6s ease, opacity 0.4s ease;
+}
+
+.Hc-wrapper.is-open {
+  max-height: 5000px;
+  opacity: 1;
+}
+
+.Tc-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.6s ease, opacity 0.4s ease;
+}
+
+.Tc-wrapper.is-open {
+  max-height: 5000px;
+  opacity: 1;
+}
+
+
+/* 分類が開いているとき、キャラも光る */
+.resident-list.is-open .chara {
+  border-left-color: rgba(156, 156, 156, 0.8);
+  box-shadow: -4px 0 10px rgba(129, 129, 129, 0);
+}
+
+.chara-meta {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.chara-meta::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: rgba(255, 255, 255, .15);
+}
+
+.meta-row {
+  display: flex;
+  gap: 2rem;
+
+}
+
+/* 左右それぞれの項目 */
+.meta-row span {
+  position: relative;
+}
+
+/* 左側の項目の右にだけ線を入れる */
+.meta-row span:first-child::after {
+  content: "";
+  position: absolute;
+  right: -1rem;
+  /* span と span の間 */
+  top: 60%;
+  transform: translateY(-50%);
+  width: 3px;
+  /* 太さ（border-leftと合わせる） */
+  height: 1.5em;
+  /* 文字に合う高さ */
+  background: rgba(255, 255, 255, .15);
+}
+
+/* タイトル部分 */
+.toggle-title {
+  font-size: 20px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+
+.tatami {
+  font-size: 20px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+/* 分類名（常に見える） */
+.resident-title {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, .2);
+}
+
+/* 中身は最初は非表示 */
+/* 中身だけ隠す */
+.resident-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.6s ease, opacity 0.4s ease;
+}
+
+/* 開いたカテゴリだけ表示 */
+.resident-list.is-open .resident-content {
+  max-height: 5000px;
+  opacity: 1;
+}
+
+.chara-wrapper {
+  overflow: hidden;
+  transition: max-height 1s ease;
+}
+
+.chara-wrapper.is-open {
+  max-height: 20000px; /* デカくてOK */
+}
+
+.resident-title {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resident-title .arrow {
+  transition: transform 0.3s ease;
+}
+
+/* 開いてる分類だけ回転 */
+.resident-list.is-open .arrow {
+  transform: rotate(180deg);
+}
+
+/* --- 色関係 --- */
+
+/* ===== 分類ごとの発光色 ===== */
+
+.resident-list {
+  --glow-color: rgba(255, 255, 255, 0.2);
+  /* 保険 */
+}
+
+.resident-list[data-type="susu"] {
+  --glow-color: rgba(248, 248, 248, 0.35);
+}
+
+.resident-list[data-type="chimera"] {
+  --glow-color: rgba(79, 87, 209, 0.32);
+}
+
+.resident-list[data-type="saiborg"] {
+  --glow-color: rgba(97, 92, 29, 0.452);
+}
+
+.resident-list[data-type="haikai"] {
+  --glow-color: rgba(255, 15, 15, 0.856);
+}
+
+.resident-list[data-type="itudatu"] {
+  --glow-color: rgba(172, 39, 143, 0.38);
+}
+
+.resident-list[data-type="fumei"] {
+  --glow-color: rgba(33, 54, 9, 0.38);
+}
+
+/* ===== 発光アニメーション(左) ===== */
+
+.resident-title {
+  padding-left: 1rem;
+  border-left: 4px solid rgba(255, 255, 255, .15);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.resident-list.is-open .resident-title {
+  border-left-color: var(--glow-color);
+  box-shadow: -4px 0 12px var(--glow-color);
+}
+
+/* ===== 発光アニメーション(分類・控え目) ===== */
+
+.resident-list {
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.resident-list.is-open {
+  border-color: var(--glow-color);
+  box-shadow: 0 0 14px var(--glow-color);
+}
+
+/* 発光アニメーション */
+
+.resident-list.is-open {
+  animation: glowPulse 1.6s ease-in-out infinite alternate;
+}
+
+
+.resident-title {
+  position: relative;
+  cursor: pointer;
+}
+
+.resident-title::after {
+  content: "▼";
+  position: absolute;
+  right: 0;
+  transition: transform 0.3s ease;
+  opacity: 0.6;
+}
+
+/* 開いてるときだけ回転 */
+.resident-list.is-open .resident-title::after {
+  transform: rotate(180deg);
+}
+
+/* 初期状態：見えない */
+.fade-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* 表示状態 */
+.fade-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.fade-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.spoiler-note {
+  font-size: 0.7em;
+  /* 小さめ */
+  margin-left: 0.6rem;
+  /* タイトルとの間隔 */
+  opacity: 0.6;
+  /* 目立ちすぎない */
+  color: #ffb3b3;
+  /* やや警告色 */
+  letter-spacing: 0.05em;
+  vertical-align: middle;
+}
+
+/* 下の部分*/
+
+.site-footer {
+  margin-top: 150px;
+  /* 本文との余白 */
+  padding: 40px 20px;
+  background: #0e0e0e;
+  /* 少し濃い背景 */
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  position: relative;
+}
+
+.footer-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-title {
+  font-size: 15px;
+  letter-spacing: 0.15em;
+  margin-bottom: 16px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.footer-nav {
+  margin-bottom: 16px;
+}
+
+.footer-nav a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  margin: 0 10px;
+  transition: color 0.3s ease;
+}
+
+.footer-nav a:hover {
+  color: #fff;
+}
+
+.footer-copy {
+  font-size: 12px;
+  opacity: 0.5;
+}
+
+/*上の部分のやつ*/
+
+.site-hero {
+  min-height: 70vh;
+  /* 画面の7割くらい */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #fff;
+
+  background:
+    linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 1)),
+    url("img/hero.jpg") center / cover no-repeat;
+
+}
+
+@media (max-width: 768px) {
+  .site-hero {
+    min-height: 60vh;
+  }
+}
+
+.hero-inner {
+  text-align: center;
+
+  transform: translateY(0) scale(1.2);
+  opacity: 1;
+
+  transition: none;
+}
+
+.hero-inner.is-animated {
+  animation: heroShrink 2.2s ease forwards;
+  will-change: transform, opacity;
+  ;
+
+
+}
+
+
+/*アニメーション部分*/
+
+@keyframes heroShrink {
+  0% {
+    transform: translateY(0);
+    scale: 1.2;
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-300px);
+    scale: 0.9;
+    opacity: 1;
+  }
+}
+
+/*上部終わり*/
+
+.hero-sub {
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  opacity: 0.5;
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  font-size: clamp(36px, 6vw, 72px);
+  letter-spacing: 0.15em;
+  margin-bottom: 20px;
+}
+
+.hero-desc {
+  font-size: 14px;
+  opacity: 0.7;
+  line-height: 1.8;
+}
+
+/* 上部メニュー */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+
+  background: rgba(0, 0, 0, 0.7);
+  border-bottom: 1px solid rgba(16, 123, 255, 0.2);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+}
+
+.header-inner {
+  max-width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  letter-spacing: 0.15em;
+  font-size: 14px;
+}
+
+.global-nav a {
+  margin-left: 24px;
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.global-nav a:hover {
+  opacity: 1;
+}
+
+/* 上部メニュー終了 */
+
+.home-link {
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.home-link:hover {
+  opacity: 1;
+}
+
+.spoiler-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.spoiler-overlay.is-show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.spoiler-box {
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 32px;
+  background: rgba(0,0,0,0.6);
+  animation: flicker 1.2s infinite alternate;
+}
+
+@keyframes flicker {
+  from { opacity: 0.95; }
+  to   { opacity: 1; }
+}
+
+.spoiler-buttons {
+  margin-top: 24px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.spoiler-buttons button {
+  background: none;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 8px 20px;
+  cursor: pointer;
+}
+
+.spoiler-buttons button:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/*ノイズ*/
+.noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: url("img/noise.png");
+  opacity: 0.15;
+  animation: noiseAnim 0.15s steps(2) infinite;
+  z-index: 10000;
+}
+
+@keyframes noiseAnim {
+  0% { transform: translate(0,0); }
+  100% { transform: translate(-5%,5%); }
+}
+
+.secret-message {
+  opacity: 0;
+  text-align: center;
+  margin: 24px 0;
+  transition: opacity 1s ease;
+}
+
+.Nc-wrapper.is-open .secret-message {
+  opacity: 0.7;
+}
+
+#spoilerOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 9999;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+#spoilerOverlay.is-show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.menu-btn {
+  display: none;
+}
+
+
+/* スマホ対応用 */
+@keyframes heroShrink {
+  0% {
+    transform: translateY(0) scale(1.2);
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-120px) scale(0.9);
+    opacity: 1;
+  }
+}
+
+/* スマホ用メニュー：デフォルトは非表示（PC） */
+.menu-btn,
+.sp-menu {
+  display: none;
+}
+
+.sp-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 70%;
+  height: 100vh;
+  background: #111;
+  transition: right 0.3s ease;
+  z-index: 1000;
+}
+
+.sp-menu.is-open {
+  right: 0;
+}
+
+.site-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  background: rgba(0,0,0,0.8);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.site-header h1 {
+  font-size: 20px;
+  transition: font-size 0.3s ease;
+}
+
+.site-header.is-small {
+  height: 56px;
+  background: rgba(0,0,0,0.95);
+}
+
+.site-header.is-small h1 {
+  font-size: 16px;
+}
+
+
+@media (max-width: 768px) {
+
+      .chara {
+        grid-template-columns: 1fr;
+      }
+
+      .chara-photo {
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
+        display: block;
+      }
+
+ .hero-title {
+     font-size: clamp(32px, 8vw, 44px); /* PCより大きくしてOK */
+    letter-spacing: 0.08em;
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    letter-spacing: 0.15em;
+  }
+
+  .hero-desc {
+    font-size: 14px;
+  }
+
+  .site-header nav a {
+    font-size: 16px;
+    padding: 14px 16px; /* ← 超重要 */
+    display: block;
+  }
+
+    .site-hero {
+    min-height: 60vh;
+    padding-top: 80px; /* ヘッダー分の逃げ */
+  }
+
+   .hero-inner {
+    transform: translateY(-40px) scale(0.95);
+  }
+
+  .menu-btn {
+    display: block;
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: #fff;
+    z-index: 10001;
+    cursor: pointer;
+  }
+
+  .sp-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 70%;
+    height: 100vh;
+    background: rgba(0,0,0,0.95);
+    padding: 80px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    transform: translateX(100%);
+    transition: transform 0.4s ease;
+    z-index: 10000;
+  }
+
+  .sp-menu a {
+    color: #fff;
+    font-size: 18px;
+    text-decoration: none;
+  }
+
+  .sp-menu.is-open {
+    transform: translateX(0);
+  }
+}
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 900;
+}
+
+.menu-overlay.is-show {
+  opacity: 1;
+  pointer-events: auto;
+}

@@ -1,0 +1,30 @@
+
+#gameAd{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 200px;
+  z-index: 999999;
+  display: none;
+}
+
+#gameAd.show{
+  display: block;
+}
+
+#gameAd img{
+  width: 100%;
+}
+
+#closeAd{
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}

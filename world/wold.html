@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>World</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #111;
+      color: white;
+    }
+
+    /* ===== 背景 ===== */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url("background.jpg") center/cover no-repeat;
+      filter: blur(8px) brightness(0.5);
+      z-index: -1;
+    }
+
+    /* ===== 上部（ぼかしなし） ===== */
+    .header {
+      height: 400px;
+      background: url("background.jpg") center/cover no-repeat;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      font-weight: bold;
+      padding-bottom: 5px;
+      font-size: 30px;
+      letter-spacing: 3px;
+      text-shadow: 0 0 10px black;
+    }
+
+    /* ===== ヘッド ===== */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 10px 20px;
+      /* ここで左右マージン調整 */
+      background: rgba(0, 0, 0, 0.6);
+      /* 半透明 */
+      backdrop-filter: blur(5px);
+      /* 背景をぼかす */
+      z-index: 1000;
+      transition: top 0.6s ease-in-out;
+      /* スクロールでスライド */
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 10px;
+      margin-left: 730px;
+    }
+
+    .nav-menu a {
+      margin-left: 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .nav-menu a:hover {
+      color: #00d9ff;
+      /* ホバーで色変化 */
+    }
+
+    /* ===== world map ===== */
+
+    .tree {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 220px auto 0;
+    }
+
+    .tree img {
+      width: 250px;
+      transition: 0.3s;
+    }
+
+    .tree img:hover {
+      transform: scale(1.05);
+    }
+
+    .vertical {
+      width: 1px;
+      height: 800px;
+      /* roofの棒の長さ */
+      background:
+        linear-gradient(to bottom,
+          rgba(255, 0, 0, 0.3),
+          rgba(68, 15, 15, 0.3),
+          rgba(68, 30, 30, 0.3),
+          rgb(19, 16, 16),
+          rgb(14, 14, 14),
+          rgb(14, 14, 14));
+
+    }
+
+    .mother-row {
+      margin: 20px 0;
+    }
+
+    .mother-children {
+      display: flex;
+      gap: 100px;
+      margin-top: 50px;
+    }
+
+.children {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 120px;
+    position: relative;
+}
+
+.center-line {
+      position: absolute;
+      left: 50%;
+      top: -50px;
+
+      width: 3px;
+      height: 100px;
+
+      background: white;
+
+      transform: translateX(-50%);
+    }
+
+    .branch {
+      width: 500px;
+      height: 145px;
+      position: relative;
+    }
+
+
+
+    .branch::before {
+      content: "";
+      position: absolute;
+
+      width: 250px;
+      height: 3px;
+
+      background: white;
+
+      top: 50px;
+      left: 50%;
+
+      transform-origin: left center;
+      transform: rotate(25deg);
+    }
+
+    .branch::after {
+      content: "";
+      position: absolute;
+
+      width: 250px;
+      height: 3px;
+
+      background: white;
+
+      top: 50px;
+      right: 50%;
+
+      transform-origin: right center;
+      transform: rotate(-25deg);
+    }
+
+    /* ===== 娘細胞へ ===== */
+    .child {
+      position: relative;
+    }
+
+    /* 娘細胞へ降りる線 */
+    .child::before {
+      content: "";
+
+      position: absolute;
+
+      width: 3px;
+      height: 25px;
+
+      background: white;
+
+      left: 50%;
+      top: -25px;
+
+      transform: translateX(-50%);
+    }
+
+    .child-vertical {
+      width: 3px;
+      height: 500px;
+      background: white;
+    }
+
+    .child-horizontal {
+      width: 150px;
+      height: 30px;
+      background: white;
+      margin-bottom: 15px;
+    }
+
+    .child-branch {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .child-branch.active {
+      display: flex;
+    }
+
+    .child-tree {
+      position: relative;
+      margin-top: 10px;
+    }
+
+    .child-tree::before {
+      content: "";
+
+      position: absolute;
+
+      left: 50%;
+      top: -40px;
+
+      width: 3px;
+      height: 40px;
+
+      background: white;
+
+      transform: translateX(-50%);
+    }
+
+    .child-tree::after {
+      content: "";
+
+      position: absolute;
+
+      top: 10px;
+      left: 0;
+
+      width: 100%;
+      height: 3px;
+
+      background: white;
+    }
+
+    .child-row {
+      display: flex;
+      justify-content: space-between;
+      width: 250px;
+      position: relative;
+      margin-top: 35px;
+    }
+
+    /* ===== 展開ボタン+ ===== */
+    .expand-btn {
+      width: 30px;
+      height: 30px;
+
+      border-radius: 50%;
+
+      border: none;
+
+      background: #444;
+      color: white;
+
+      cursor: pointer;
+    }
+
+    /* ===== ポップアップ ===== */
+    .mother {
+      position: relative;
+      z-index: 50;
+    }
+
+    .tooltip {
+      position: absolute;
+
+      left: 280px;
+      /* 画像の右側 */
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      width: 300px;
+
+      background: rgba(20, 20, 20, 0.95);
+      border: 1px solid #666;
+
+      padding: 15px;
+
+      opacity: 0;
+      transition: 0.3s;
+
+      pointer-events: none;
+
+      border-radius: 10px;
+
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .mother:hover .tooltip {
+      opacity: 1;
+    }
+
+    /* ===== フッター ===== */
+
+    .site-footer {
+      margin-top: 150px;
+      /* 本文との余白 */
+      padding: 5px 50px;
+      background: #0a0a0a;
+      /* 少し濃い背景 */
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 14px;
+      position: relative;
+    }
+
+    .footer-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .footer-title {
+      font-size: 15px;
+      letter-spacing: 0.15em;
+      margin-bottom: 16px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .footer-nav {
+      margin-bottom: 16px;
+    }
+
+    .footer-nav a {
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      margin: 0 10px;
+      transition: color 0.3s ease;
+    }
+
+    .footer-nav a:hover {
+      color: #fff;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="logo">World</div>
+    <nav class="nav-menu">
+      <a href="../index.html">HOME</a>
+      <a href="../GameProject/ゲームプロジェクト一覧.html">PROJECT</a>
+      <a href="../world/wold.html">WORLD</a>
+      <a href="../character一覧/キャラクター一覧.html">CHARACTER</a>
+    </nav>
+  </header>
+
+  <div class="tree">
+
+    <div class="roof">
+      <a href="roof.html">
+        <img src="画像/roof.png">
+      </a>
+    </div>
+
+    <div class="vertical"></div>
+
+
+    <div class="mother center">
+
+      <a href="拇細胞１/Tomonitter/世界観詳細.html">
+        <img src="画像/拇細胞1.png">
+      </a>
+
+      <div class="tooltip">
+        始まり。<br>
+        補完された情報を基に99.99％移植。<br>
+        終わりと始まりのループを幾億に分かれて繰り返している。
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="center-line"></div>
+    </div>
+
+    <div class="children">
+
+      <div class="mother">
+
+        <a href="mother2.html">
+          <img src="画像/拇細胞2.png">
+        </a>
+
+        <button class="expand-btn" onclick="toggleBranch('branch2', this)">
+          +
+        </button>
+
+        <div id="branch2" class="child-branch">
+
+          <div class="child-tree">
+
+            <div class="child-row">
+              <a href="拇細胞２/Multiformitas/多種.html">
+                <div class="child">娘細胞A</div>
+              </a>
+              <a href="拇細胞２/Multiformitas/多種.html">
+                <div class="child">娘細胞B</div>
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="mother">
+        <a href="mother3.html">
+          <img src="画像/拇細胞３.png">
+        </a>
+        <button class="expand-btn" onclick="toggleBranch('branch3', this)">
+          +
+        </button>
+
+        <div id="branch3" class="child-branch">
+
+          <div class="child-tree">
+
+            <div class="child-row">
+              <div class="child">娘細胞C</div>
+              <div class="child">娘細胞D</div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+      <!-- フッター -->
+      <div class="footer">
+        <footer class="site-footer">
+
+          <div class="footer-inner">
+
+            <p class="footer-title">Simulations</p>
+
+            <nav class="footer-nav">
+              <a href="#top">TOP</a>
+              <a href="#note">注意事項</a>
+            </nav>
+
+            <p class="footer-copy">© 2026 N2</p>
+
+          </div>
+
+        </footer>
+      </div>
+
+      <script>
+        // スクロールでヘッダーを隠す/表示する
+        let lastScrollY = window.scrollY;
+        const header = document.querySelector('.site-header');
+
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > lastScrollY) {
+            // 下にスクロール → ヘッダーを隠す
+            header.style.top = '-80px';
+          } else {
+            // 上にスクロール → ヘッダーを表示
+            header.style.top = '0';
+          }
+          lastScrollY = window.scrollY;
+        });
+
+        window.addEventListener("load", () => {
+          window.scrollTo({
+            top: 250,
+            behavior: "instant"
+          });
+        });
+
+        function toggleBranch(id) {
+
+          const branch = document.getElementById(id);
+
+          branch.classList.toggle("active");
+        }
+
+        function toggleBranch(id, btn) {
+
+          const branch = document.getElementById(id);
+
+          branch.classList.toggle("active");
+
+          btn.textContent =
+            branch.classList.contains("active")
+              ? "−"
+              : "+";
+        }
+      </script>
+
+</body>
+
+</html>

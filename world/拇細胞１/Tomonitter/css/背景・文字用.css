@@ -1,0 +1,44 @@
+
+body {
+  background-color: #1a1a1a;
+  color: #eaeaea;
+}
+
+/* 
+　ノイズ
+　body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url(bg/noise.png);
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+幾何学模様・図形
+body {
+  background:
+    radial-gradient(circle at 1px 1px, #fff 1px, transparent 0),
+    #0d0d0d;
+  background-size: 40px 40px;
+  opacity: 0.03;
+}
+
+文字・記号の薄重ね
+body::after {
+  content: "LOREM IPSUM";
+  position: fixed;
+  inset: 0;
+  font-size: 10rem;
+  opacity: 0.02;
+}
+*/
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url(bg/noise.png);
+  opacity: 0.04;
+  pointer-events: none;
+}
