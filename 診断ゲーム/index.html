@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>八局診断</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="tv">
+  <div class="tv-topbar">
+    <span class="brand"><span class="led"></span>ON AIR</span>
+    <span class="ch" id="chIndicator">CH.--</span>
+  </div>
+
+  <!-- TITLE -->
+  <div class="screen active" id="screen-title">
+    <div class="kicker">CHARACTER DIAGNOSIS</div>
+    <div class="title-logo">八局診断<br><b>あなたに合う周波数は。</b></div>
+    <p class="hook">16人の登場人物に、それぞれ違う顔がある。<br>いくつかの質問に答えると、あなたと相性のいいチャンネル＝キャラクターが浮かび上がる。<br>――ただし、表の顔だけとは限らない。</p>
+    <div class="roster-strip" id="rosterStrip"></div>
+    <div class="btn-row">
+      <button class="btn" id="startBtn">診断をはじめる（全8問）</button>
+      <button class="link-btn" id="toGalleryFromTitle">→ 先に17人のプロフィールを見る</button>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="screen" id="screen-quiz">
+    <div class="dots" id="quizDots"></div>
+    <div class="q-count" id="qCount">Q.1 / 8</div>
+    <div class="q-text" id="qText"></div>
+    <div class="scroll-area"><div class="options" id="qOptions"></div></div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="screen" id="screen-result">
+    <div class="flip-wrap"><div class="flip-card" id="flipCard">
+      <div class="face face-front">
+        <div class="mon-icon" id="resIconFront"></div>
+        <div class="chara-name" id="resNameFront"></div>
+        <div class="chara-role" id="resRoleFront"></div>
+        <div class="danger-meter" id="resDangerFront"></div>
+        <div class="catch-tag">表の顔</div>
+        <div class="catchphrase" id="resFront"></div>
+        <div class="btn-row" style="margin-top:auto;">
+          <button class="btn" id="flipBtn">チャンネルを切替えて素顔を見る</button>
+        </div>
+      </div>
+      <div class="face face-back">
+        <div class="mon-icon" id="resIconBack"></div>
+        <div class="chara-name" id="resNameBack"></div>
+        <div class="catch-tag">裏の顔</div>
+        <div class="subline" id="resBack"></div>
+        <div class="btn-row" style="margin-top:auto;">
+          <button class="btn" id="toScenarioBtn">この人ともう少し話してみる</button>
+        </div>
+      </div>
+    </div></div>
+    <div class="btn-row">
+      <button class="btn-ghost" id="resToGallery">別のキャラを見る</button>
+      <button class="btn-ghost" id="resRestart">もう一度診断する</button>
+    </div>
+  </div>
+
+  <!-- SCENARIO (visual-novel style) -->
+  <div class="screen" id="screen-scenario">
+    <div class="vn-stage" id="vnStage">
+      <div class="vn-scene-tag" id="scProgress" style="display:none;"></div>
+      <div class="vn-sprite" id="vnSprite"></div>
+    </div>
+    <div class="scroll-area">
+      <div class="vn-textbox" id="vnTextbox">
+        <div class="vn-nameplate" id="scName"></div>
+        <p class="vn-dialogue" id="scSetup"></p>
+        <div class="vn-next-indicator" id="scNext">▼ タップして続ける</div>
+        <div class="vn-choices" id="scChoices"></div>
+      </div>
+      <div id="scEndingWrap" style="display:none;">
+        <div class="vn-textbox vn-textbox-standalone">
+          <div class="vn-nameplate vn-nameplate-end" id="scBadge"></div>
+          <p class="vn-dialogue" id="scEndingText"></p>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-ghost" id="scToGallery">別のキャラを見る</button>
+      <button class="btn-ghost" id="scRestart">もう一度診断する</button>
+    </div>
+  </div>
+
+  <!-- GALLERY -->
+  <div class="screen" id="screen-gallery">
+    <div class="chara-name" style="text-align:center;">17人のプロフィール</div>
+    <p class="subline" style="text-align:center; margin:-8px auto 0;">まともっぽい順 → やばい順に並んでいる。タップすると素顔を見に行ける。</p>
+    <div class="scroll-area"><div class="gallery-grid" id="galleryGrid"></div></div>
+    <div class="btn-row">
+      <button class="btn-ghost" id="galToBonus">恋愛対象外の3人も見る</button>
+      <button class="btn" id="galToTitle">タイトルへ戻る</button>
+    </div>
+  </div>
+
+  <!-- BONUS -->
+  <div class="screen" id="screen-bonus">
+    <div class="chara-name" style="text-align:center;">恋愛対象外の3人</div>
+    <p class="subline" style="text-align:center; margin:-8px auto 0;">診断には出てこないけれど、深い関係を築ける面々。恋愛メーターは持たない。</p>
+    <div class="scroll-area" id="bonusList" style="display:flex; flex-direction:column; gap:12px;"></div>
+    <div class="btn-row">
+      <button class="btn" id="bonusToGallery">9人のプロフィールへ戻る</button>
+    </div>
+  </div>
+
+  <footer class="credit">ORIGINAL CHARACTER DIAGNOSIS GAME</footer>
+</div>
+
+
+<script src="js/data.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
